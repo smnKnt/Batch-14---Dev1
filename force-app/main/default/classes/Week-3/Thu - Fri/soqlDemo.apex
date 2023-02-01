@@ -1,8 +1,13 @@
+SoqlDemo.parentToChild_SOQL1();
+SoqlDemo.childToParent_SOQL1();
+SoqlDemo.accountFilter_SOQL('GenePoint');
+SoqlDemo.accountFilter_SOQL('sfdc');
+SoqlDemo.accountFilter_SOQL('sForce');
+SoqlDemo.accountFilter_SOQL();
 SoqlDemo.accountSOQL_3();
 SoqlDemo.accountSOQL_2();
 SoqlDemo.accounSOQL_11();
 SoqlDemo.accounSOQL_1();
-SoqlDemo.accountFilter_SOQL('Burlington Textiles Corp of America');
 
 
 
@@ -35,7 +40,17 @@ SELECT Id, Name, Mailingcity FROM Contact WHERE Mailingcity = 'paris' or Mailing
 SELECT Id, Name, Mailingcity FROM Contact WHERE Mailingcity IN ('paris','lawrence','burlington');
 SELECT Id, Name, Mailingcity FROM Contact WHERE Mailingcity NOT IN ('paris','lawrence','burlington');
 
-SELECT Id, Name, Subject__c, Priority__c, Salesforce_Project__r.Project_Name__c, Salesforce_Project__r.Status__c FROM Salesforce_Ticket__c
+SELECT Id, Name, Subject__c, Priority__c, Salesforce_Project__r.Project_Name__c,Salesforce_Project__r.Status__c FROM Salesforce_Ticket__c;
+
+SELECT COUNT() FROM Contact;
+SELECT COUNT(Id) FROM Contact;
+SELECT COUNT(MailingCity) FROM Contact;
+SELECT LeadSource, COUNT(Name) FROM Lead GROUP BY LeadSource;
+SELECT SUM(Amount), StageName FROM Opportunity GROUP BY StageName;
+SELECT SUM(Amount), AVG(Amount), StageName FROM Opportunity GROUP BY StageName;
+SELECT COUNT(Id), Name FROM Account GROUP BY Name;
+SELECT COUNT(Id), Name FROM Account GROUP BY Name HAVING COUNT(Id) >1;
+SELECT SUM(Amount), StageName FROM Opportunity GROUP BY StageName HAVING SUM(Amount) > 500000;
 
 
 
@@ -43,7 +58,7 @@ SELECT Id, Name, Subject__c, Priority__c, Salesforce_Project__r.Project_Name__c,
 
 
 
-
+SELECT Id, Name, (SELECT Id, Name FROM Salesforce_Tickets__r) FROM Salesforce_Project__c
 
 
 
