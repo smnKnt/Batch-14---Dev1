@@ -1,16 +1,16 @@
 public class SoqlDemo {
     public static void accounSOQL_1() {
-        list<account> listAcc = [select id, name, phone from account order by createddate desc];
+        list<account> listAcc = [SELECT id, name, phone FROM account order by createddate desc];
         system.debug('list of accounts ' + listAcc);
     }
 
     public static void accounSOQL_11() {
-        account acc = [select id, name, phone from account order by createddate desc limit 1];
+        account acc = [SELECT id, name, phone FROM account order by createddate desc limit 1];
         system.debug('accounts acc ' + acc);
     }
 
     public static void accountSOQL_2() {
-        account acc = [select id, name, phone, AccountNumber from account order by createddate desc limit 1];
+        account acc = [SELECT id, name, phone, AccountNumber FROM account order by createddate desc limit 1];
         system.debug('accounts acc ' + acc);
         string aName = acc.name;
         string aPhone = acc.Phone;
@@ -18,7 +18,7 @@ public class SoqlDemo {
     }
 
     public static void accountSOQL_3() {
-        list<account> listAccount = [select id, name, phone, accountnumber from account order by createddate];
+        list<account> listAccount = [SELECT id, name, phone, accountnumber FROM account order by createddate];
 
         for (account eachAccount : listAccount) {
             system.debug('---eachaccount loop start---');
@@ -32,15 +32,15 @@ public class SoqlDemo {
     }
     public static void accountFilter_SOQL() {
         string accountNameFilter = 'sForce';
-        list<account> listAcc = [select id, name from account where name = :accountNameFilter];
+        list<account> listAcc = [SELECT id, name FROM account WHERE name = :accountNameFilter];
         system.debug('list acc ' + listAcc);
     }
     public static void accountFilter_SOQL(string accountNameFilter) {
-        list<account> listAcc = [select id, name from account where name = :accountNameFilter];
+        list<account> listAcc = [SELECT id, name FROM account WHERE name = :accountNameFilter];
         system.debug('list acc ' + listAcc);
     }
     public static void childToParent_SOQL1() {
-        list<contact> listContact = [select id, name, phone, account.name, account.industry from contact where account.industry = 'energy'];
+        list<contact> listContact = [SELECT id, name, phone, account.name, account.industry FROM contact WHERE account.industry = 'energy'];
         for (contact eachContact : listContact) {
             string accName = eachContact.account.name;
             system.debug('contact name is ' + eachContact.Name + ', its account is ' + accName);
@@ -48,9 +48,9 @@ public class SoqlDemo {
         }
     }
     public static void parentToChild_SOQL1() {
-        list<account> listAcc = [select name, annualrevenue, 
-                            (select name, amount from opportunities where stagename = 'Closed won') 
-                            from account where type = 'Customer - direct'];
+        list<account> listAcc = [SELECT name, annualrevenue, 
+                            (SELECT name, amount FROM opportunities WHERE stagename = 'Closed won') 
+                            FROM account WHERE type = 'Customer - direct'];
         for (account eachAcc : listAcc) {
             system.debug('account name is ' + eachAcc.Name + ', acc annual revenue ' + eachAcc.AnnualRevenue);
             list<Opportunity> eachAccOpp = eachAcc.Opportunities;
@@ -58,17 +58,17 @@ public class SoqlDemo {
             for (Opportunity eachOpp : eachAccOpp) {
                 system.debug('opp name ' + eachopp.Name + ', amount is ' + eachOpp.Amount);
             }
-            system.debug('_______');
+            system.debug('_______');  
         }
     }
-     //projects, and its tickets.
+    //projects, and its tickets.
     //2 req
     //1. total tickets for each PROJECT.
     //2. high priority ticket for each PROJECT.
     public static void parentToChild_SOQL2() {
-        list<salesforce_project__c> listSP = [select name, project_name__c, 
-                    (select subject__c, priority__c from salesforce_tickets__r) 
-                    from salesforce_project__c];
+        list<salesforce_project__c> listSP = [SELECT name, project_name__c, 
+                    (SELECT subject__c, priority__c FROM salesforce_tickets__r) 
+                    FROM salesforce_project__c];
         //for each loop on project
         for (salesforce_project__c eachSP : listSP) {
             //1. total tickets.
