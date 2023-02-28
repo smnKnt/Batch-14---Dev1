@@ -126,22 +126,22 @@ public class DmlDemo {
       //update name and append 'Yy' if active is 'Yes' --> 100(assume)  
       //update name and append 'Nn' if active is Null --> 50
 
-      public static void dmlDemoMultipleUpdate_right2() {
-         list<account> listAccount = [select id, name, Active__c from account];
+   public static void dmlDemoMultipleUpdate_right2() {
+      list<account> listAccount = [select id, name, Active__c from account];
 
-         list<account> updateAccountList = new list<account>();
+      list<account> updateAccountList = new list<account>();
 
-         for (account eachAcc : listAccount) {
-            if (eachAcc.Active__c == 'Yes') {
-               eachAcc.Name = eachAcc.Name + ' Yy';
-               updateAccountList.add(eachAcc);
-            } else if(eachAcc.Active__c == null){
-               eachAcc.Name = eachAcc.Name + ' Nn';
-               updateAccountList.add(eachAcc);
-            }
-         }
-         if (!updateAccountList.isEmpty()) {
-            update updateAccountList;
+      for (account eachAcc : listAccount) {
+         if (eachAcc.Active__c == 'Yes') {
+            eachAcc.Name = eachAcc.Name + ' Yy';
+            updateAccountList.add(eachAcc);
+         } else if(eachAcc.Active__c == null){
+            eachAcc.Name = eachAcc.Name + ' Nn';
+            updateAccountList.add(eachAcc);
          }
       }
+      if (!updateAccountList.isEmpty()) {
+         update updateAccountList;
+      }
+   }
 }
